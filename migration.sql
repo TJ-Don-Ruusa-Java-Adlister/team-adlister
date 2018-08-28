@@ -12,7 +12,7 @@ CREATE TABLE users (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(240) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    phone_no VARCHAR(11) DEFAULT '',
+    phone_no VARCHAR(14) DEFAULT '',
     PRIMARY KEY (id),
     UNIQUE (username),
     UNIQUE (email)
@@ -57,10 +57,11 @@ VALUES
   ('Furniture'),
   ('Garden'),
   ('Toys and Games'),
-  ('Video Games');
+  ('Video Games'),
+  ('Pets and Animals');
 
 SELECT * FROM users;
-SELECT * FROM ads;
+SELECT * FROM ads GROUP BY id;
 SELECT * FROM category;
 SELECT * FROM ads_topics;
 
