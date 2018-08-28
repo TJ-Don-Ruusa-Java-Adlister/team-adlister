@@ -20,8 +20,35 @@
             </c:choose>
         </ul>
         <form class="form-inline my-2 my-lg-0" action="/ads" method="POST">
-            <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search ads..." aria-label="Search" style="width: 500px;">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <div class="input-group">
+                <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown">
+                        <span id="search_category">All Categories</span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a class="badge badge-light" href="#all">All Categories</a></li>
+                        <li><a class="badge badge-light" href="#2">Antiques</a></li>
+                        <li><a class="badge badge-light" href="#3">Appliances</a></li>
+                        <li><a class="badge badge-light" href="#4">Arts and Craft</a></li>
+                        <li><a class="badge badge-light" href="#5">Automobile</a></li>
+                        <li><a class="badge badge-light" href="#6">Beauty</a></li>
+                        <li><a class="badge badge-light" href="#7">Children</a></li>
+                        <li><a class="badge badge-light" href="#8">Computers</a></li>
+                        <li><a class="badge badge-light" href="#9">Electronics</a></li>
+                        <li><a class="badge badge-light" href="#10">Furniture</a></li>
+                        <li><a class="badge badge-light" href="#11">Garden</a></li>
+                        <li><a class="badge badge-light" href="#14">Pets & Animals</a></li>
+                        <li><a class="badge badge-light" href="#12">Toys and Games</a></li>
+                        <li><a class="badge badge-light" href="#13">Video Games</a></li>
+                        <li><a class="badge badge-light" href="#1">Other</a></li>
+                    </ul>
+                </div>
+                <input type="hidden" name="category" value="all" id="search_param">
+                <input type="text" class="form-control" name="search" placeholder="Search ads..." style="width: 500px;">
+                <span class="input-group-btn">
+                    <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-search">Search</span></button>
+                </span>
+            </div>
         </form>
     </div>
 </nav>
