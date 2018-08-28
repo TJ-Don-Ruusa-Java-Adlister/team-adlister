@@ -12,10 +12,14 @@
 <div class="container">
     <h1>Here Are all the ads!</h1>
 
+    <c:if test="${requestScope.search != null}">
+        <h3>Search term: <c:out value="${search}" /></h3>
+    </c:if>
+
     <c:forEach var="ad" items="${ads}">
         <div class="col-md-6">
-            <h2>${ad.title}</h2>
-            <p>${ad.description}</p>
+            <h2><c:out value="${ad.title}" /></h2>
+            <p><c:out value="${ad.description}" /></p>
         </div>
     </c:forEach>
 </div>
