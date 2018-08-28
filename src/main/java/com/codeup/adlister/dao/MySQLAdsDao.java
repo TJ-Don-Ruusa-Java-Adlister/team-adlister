@@ -40,6 +40,57 @@ public class MySQLAdsDao implements Ads {
     }
 
     @Override
+    public List<Ad> search(String category, String searchTerm) {
+        PreparedStatement stmt = null;
+        String formattedSearch = "%" + searchTerm + "%";
+        String formattedCat = "%" + category + "%";
+        try {
+            stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
+                    "JOIN ads_topics as ats on ats.ads_id = a.id " +
+                    "JOIN category as c on c.id = ats.category_id " +
+                    "WHERE c.category = ? AND a.title LIKE ? OR a.description LIKE ?)");
+            stmt.setString(1, formattedCat);
+            stmt.setString(2, formattedSearch);
+            stmt.setString(3, formattedSearch);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads...", e);
+        }
+    }
+
+    @Override
+    public List<Ad> searchByTitle(String searchTerm) {
+        PreparedStatement stmt = null;
+        String formattedSearch = "%" + searchTerm + "%";
+        try {
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE title LIKE ?");
+            stmt.setString(1, formattedSearch);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving all ads.", e);
+        }
+    }
+
+    @Override
+    public List<Ad> searchbyCategory(String category) {
+        PreparedStatement stmt = null;
+        String formattedCat = "%" + category + "%";
+        try {
+            stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
+                    "JOIN ads_topics as ats on ats.ads_id = a.id " +
+                    "JOIN category as c on c.id = ats.category_id " +
+                    "WHERE c.category = ?)");
+            stmt.setString(1, formattedCat);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads...", e);
+        }
+    }
+
+    @Override
     public Long insert(Ad ad) {
         try {
             String insertQuery = "INSERT INTO ads(user_id, title, description) VALUES (?, ?, ?)";
