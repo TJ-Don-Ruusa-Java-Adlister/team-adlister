@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,7 +9,13 @@
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <div class="container">
-        <h1>Please Log In</h1>
+        <h2 class="display-2">Log In</h2>
+        <c:if test="${sessionScope.registered != null}">
+            <div class="alert alert-info" role="alert">${sessionScope.registered}</div>
+        </c:if>
+        <c:if test="${sessionScope.error != null}">
+            <div class="alert alert-danger" role="alert">${sessionScope.error}</div>
+        </c:if>
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="username">Username</label>
