@@ -1,4 +1,4 @@
-.navbar{
+nav{
     z-index: 1000;
 }
 
@@ -26,4 +26,9 @@
     background-size: cover;
     min-height: 75vh;
     padding-top: 25vh;
+}
+
+#register{
+    height: 500px;
+    border: solid cornflowerblue 3px;
 }
