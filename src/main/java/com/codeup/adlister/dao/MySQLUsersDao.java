@@ -2,6 +2,7 @@ package com.codeup.adlister.dao;
 
 import com.codeup.adlister.controllers.Config;
 import com.codeup.adlister.models.User;
+import com.codeup.adlister.util.Password;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
@@ -79,10 +80,10 @@ public class MySQLUsersDao implements Users {
         return new User(
             rs.getLong("id"),
             rs.getString("username"),
-            rs.getString("first_name"),
-            rs.getString("last_name"),
             rs.getString("email"),
             rs.getString("password"),
+            rs.getString("first_name"),
+            rs.getString("last_name"),
             rs.getString("phone_no")
         );
     }
