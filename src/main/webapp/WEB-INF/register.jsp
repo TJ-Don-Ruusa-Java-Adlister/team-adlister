@@ -12,10 +12,12 @@
         <h2 class="display-2 mt-3 mb-2">Register</h2>
         <h6 class="display-6">Please fill in your information.</h6>
 
+    <%--Displays an error if any of the forms/form values are invalid--%>
         <c:if test="${error != null}">
             <div class="alert alert-danger" role="alert">${error}</div>
         </c:if>
 
+    <%--Registration form--%>
         <form class="mt-5" action="/register" method="post">
             <div class="form-group">
                 <label for="firstName"><span style="color: #d81700; font-weight: bold">* </span>First Name</label>
@@ -31,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label for="phoneNo"><span style="color: #d81700; font-weight: bold">* </span>Phone Number</label>
-                <input id="phoneNo" name="phoneNo" class="form-control" type="text" value="${sessionScope.phoneNo}" placeholder="e.g. 555-555-5555">
+                <input id="phoneNo" name="phoneNo" class="form-control" type="text" value="${sessionScope.phoneNo}" placeholder="e.g. 5551114444">
             </div>
             <div class="form-group">
                 <label for="email"><span style="color: #d81700; font-weight: bold">* </span>Email</label>
@@ -48,6 +50,8 @@
             <input type="submit" class="btn btn-primary btn-block">
         </form>
     </div>
+
+<%--JavaScript(s)--%>
     <jsp:include page="partials/scripts.jsp" />
 </body>
 </html>

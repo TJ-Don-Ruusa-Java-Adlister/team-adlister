@@ -2,6 +2,8 @@ package com.codeup.adlister.controllers;
 
 import com.codeup.adlister.dao.DaoFactory;
 import com.codeup.adlister.models.User;
+import com.codeup.adlister.util.Validation;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,26 +28,27 @@ public class RegisterServlet extends HttpServlet {
         String phoneNo = request.getParameter("phoneNo");
         String password = request.getParameter("password");
         String passwordConfirmation = request.getParameter("confirm_password");
-        User existingUsername = DaoFactory.getUsersDao().findByUsername(username);
-        User existingEmail = DaoFactory.getUsersDao().findByEmail(email);
         HttpSession session = request.getSession();
 
-        // validate input
+    // validate inputs
         boolean invalidAttempt = firstName.isEmpty()
                 || lastName.isEmpty()
                 || username.isEmpty()
-                || existingUsername != null
                 || phoneNo.isEmpty()
                 || email.isEmpty()
-                || existingEmail != null
                 || password.isEmpty()
-                || password.length() < 8
-                || !password.equals(passwordConfirmation);
+                || !Validation.isNotExistingUsername(username)
+                || Validation.isValidPhoneNumber(phoneNo)
+                || !Validation.isNotExistingEmail(email)
+                || !Validation.isValidLength(password)
+                || !Validation.passwordsMatching(password, passwordConfirmation);
 
-        /** * * * * * * * * * *
-         * * ERROR HANDLING * *
-         * * * * * * * * * * */
+        /** * * * * * * * * * * * * * * * * *
+         * * REGISTRATION ERROR HANDLING * *
+         * * * * * * * * * * * * * * * * * **/
         if (invalidAttempt) {
+
+        // if any field was left blank...
             if (firstName.isEmpty()
                     || lastName.isEmpty()
                     || username.isEmpty()
@@ -53,18 +56,27 @@ public class RegisterServlet extends HttpServlet {
                     || phoneNo.isEmpty()
                     || password.isEmpty()) {
                 request.setAttribute("error", "All fields are required.");
-            } else if (existingUsername != null) {
-                // if a username already exists...
+        // if a username already exists...
+            } else if (!Validation.isNotExistingUsername(username)) {
                 request.setAttribute("error", "There is already a user with that username. Please login or choose another username.");
-            } else if (existingEmail != null) {                     // if an email already exists...
+        // if the phone number is not valid...
+            } else if (!Validation.isValidPhoneNumber(phoneNo)) {
+                request.setAttribute("error", "Phone number must be numbers only & must include area code. Please try again.");
+        // if an email already exists...
+            } else if (!Validation.isNotExistingEmail(email)) {
                 request.setAttribute("error", "There is already a user with that email. Please login or use another email.");
-            } else if (password.length() < 8) {                     // if a password is too short...
+        // if a password is too short...
+            } else if (Validation.isValidLength(password)) {
                 request.setAttribute("error", "Password is not long enough. (8 or more characters)");
-            } else if (!password.equals(passwordConfirmation)) {    // if the passwords do not match...
+        // if the passwords do not match...
+            } else if (!Validation.passwordsMatching(password, passwordConfirmation)) {
                 request.setAttribute("error", "Passwords do not match.");
-            } else {                                                // if any field is empty...
+        // if any field is empty...
+            } else {
                 request.setAttribute("error", "Please check your information and try again.");
             }
+
+        // Setting session attributes so registration form is still pre-filled if error occurs
             session.setAttribute("firstName", firstName);
             session.setAttribute("lastName", lastName);
             session.setAttribute("username", username);
@@ -73,10 +85,14 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("password", password);
             request.getRequestDispatcher("/WEB-INF/register.jsp").forward(request, response);
         } else {
-            // create and save a new user
+
+        // create a new User object
             User user = new User(username, firstName, lastName, email, password, phoneNo);
+        // Insert User object into `users` table
             DaoFactory.getUsersDao().insert(user);
+        // Clear any session attributes from registration
             request.getSession().invalidate();
+        // Set a session attribute indicating a successful registration that will be passed to /login
             request.getSession().setAttribute("registered", "Registration successful. Please log in.");
             response.sendRedirect("/login");
         }
