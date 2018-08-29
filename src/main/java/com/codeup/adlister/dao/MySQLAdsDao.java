@@ -39,16 +39,18 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Method used when user selects specific category AND uses a search term
     @Override
     public List<Ad> search(String category, String searchTerm) {
         PreparedStatement stmt = null;
-        String formattedSearch = "%" + searchTerm + "%";
+        String formattedSearch = "%" + searchTerm.toLowerCase() + "%";
         String formattedCat = "%" + category + "%";
+        System.out.println("search() method used");
         try {
             stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
                     "JOIN ads_topics as ats on ats.ads_id = a.id " +
                     "JOIN category as c on c.id = ats.category_id " +
-                    "WHERE c.category = ? AND a.title LIKE ? OR a.description LIKE ?)");
+                    "WHERE c.id = ? AND (LOWER(a.title) LIKE ? OR LOWER(a.description) LIKE ?))");
             stmt.setString(1, formattedCat);
             stmt.setString(2, formattedSearch);
             stmt.setString(3, formattedSearch);
@@ -59,13 +61,16 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Method used when user leaves category set to 'all' and submits a search term
     @Override
     public List<Ad> searchByTitle(String searchTerm) {
         PreparedStatement stmt = null;
-        String formattedSearch = "%" + searchTerm + "%";
+        String formattedSearch = "%" + searchTerm.toLowerCase() + "%";
+        System.out.println("searchByTitle() used");
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads WHERE title LIKE ?");
+            stmt = connection.prepareStatement("SELECT * FROM ads WHERE LOWER(title) LIKE ? OR LOWER(description) LIKE ?");
             stmt.setString(1, formattedSearch);
+            stmt.setString(2, formattedSearch);
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
@@ -73,16 +78,18 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // Method used when user selects a category and submits without entering a search term
     @Override
     public List<Ad> searchbyCategory(String category) {
         PreparedStatement stmt = null;
         String formattedCat = "%" + category + "%";
+        System.out.println("searchByCategory() used");
         try {
             stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
                     "JOIN ads_topics as ats on ats.ads_id = a.id " +
                     "JOIN category as c on c.id = ats.category_id " +
-                    "WHERE c.category = ?)");
-            stmt.setString(1, formattedCat);
+                    "WHERE c.id = ?)");
+            stmt.setString(1, category);
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {

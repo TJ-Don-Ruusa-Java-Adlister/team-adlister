@@ -23,10 +23,12 @@ public class AdsIndexServlet extends HttpServlet {
 
         if (category.equals("all") && !search.equals("")) {
             request.setAttribute("ads", DaoFactory.getAdsDao().searchByTitle(search));
+        } else if (category.equals("all") && search.equals("")) {
+            request.setAttribute("ads", DaoFactory.getAdsDao().all());
         } else if (!category.equals("all") && search.equals("")) {
-            request.setAttribute("ads", DaoFactory.getAdsDao().search(category, search));
-        } else {
             request.setAttribute("ads", DaoFactory.getAdsDao().searchbyCategory(category));
+        } else {
+            request.setAttribute("ads", DaoFactory.getAdsDao().search(category, search));
         }
 
 
