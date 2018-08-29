@@ -146,4 +146,67 @@ public class MySQLAdsDao implements Ads {
         }
         return ads;
     }
+
+//Methods affecting edit/delete/update functionality
+
+    // method to get ads with specific userID
+    @Override
+    public List<Ad> getAdsByUser(long userId) {
+        List<Ad> adsByUser = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ads WHERE user_id = ? AND is_deleted= 0");
+            stmt.setLong(1,userId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                adsByUser.add(new Ad(
+                        rs.getLong("id"),
+                        rs.getLong("user_id"),
+                        rs.getString("title"),
+                        rs.getString("description"),
+                        rs.getString("date_posted")
+
+                ));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by a user from the database", e);
+        }
+
+        return adsByUser;
+    }
+
+    // method to delete a specific ad
+    @Override
+    public void deleteAd(Long id) {
+        String query = "DELETE FROM ads where id = ?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
+        catch (SQLException e){
+            throw new RuntimeException("Error deleting ad.", e);
+
+        }
+    }
+
+    @Override
+    public void editAd(Ad ad) {
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title=? description=? WHERE id=?");
+
+            stmt.setString(3, ad.getTitle());
+            stmt.setString(4, ad.getDescription());
+            stmt.setLong(1, ad.getId());
+            stmt.setLong(2, ad.getUserId());
+
+            stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating Ad information", e);
+        }
+    }
+
+
 }
