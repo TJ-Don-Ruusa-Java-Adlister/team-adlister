@@ -8,4 +8,8 @@ public interface Users {
     User findByUsername(String username);
     User findByEmail(String email);
     Long insert(User user);
+    Long updateUsername(String username, Long id);
+    Long updateEmail(String email, Long id);
+    Long updatePassword(String password, Long id);
+    Long updatePhoneNo(String phone_no, Long id);
 }
