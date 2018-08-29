@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -8,22 +9,40 @@
 <body>
     <jsp:include page="partials/navbar.jsp" />
     <div class="container">
-        <h1>Please fill in your information.</h1>
-        <form action="/register" method="post">
+        <h2 class="display-2 mt-3 mb-2">Register</h2>
+        <h6 class="display-6">Please fill in your information.</h6>
+
+        <c:if test="${error != null}">
+            <div class="alert alert-danger" role="alert">${error}</div>
+        </c:if>
+
+        <form class="mt-5" action="/register" method="post">
             <div class="form-group">
-                <label for="username">Username</label>
-                <input id="username" name="username" class="form-control" type="text">
+                <label for="firstName"><span style="color: #d81700; font-weight: bold">* </span>First Name</label>
+                <input id="firstName" name="firstName" class="form-control" type="text" value="${sessionScope.firstName}" placeholder="e.g. Bill">
             </div>
             <div class="form-group">
-                <label for="email">Email</label>
-                <input id="email" name="email" class="form-control" type="text">
+                <label for="lastName"><span style="color: #d81700; font-weight: bold">* </span>Last Name</label>
+                <input id="lastName" name="lastName" class="form-control" type="text" value="${sessionScope.lastName}" placeholder="e.g. Johnson">
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input id="password" name="password" class="form-control" type="password">
+                <label for="username"><span style="color: #d81700; font-weight: bold">* </span>Username</label>
+                <input id="username" name="username" class="form-control" type="text" value="${sessionScope.username}" placeholder="e.g. billyjohn123">
             </div>
             <div class="form-group">
-                <label for="confirm_password">Confirm Password</label>
+                <label for="phoneNo"><span style="color: #d81700; font-weight: bold">* </span>Phone Number</label>
+                <input id="phoneNo" name="phoneNo" class="form-control" type="text" value="${sessionScope.phoneNo}" placeholder="e.g. 555-555-5555">
+            </div>
+            <div class="form-group">
+                <label for="email"><span style="color: #d81700; font-weight: bold">* </span>Email</label>
+                <input id="email" name="email" class="form-control" type="text" value="${sessionScope.email}" placeholder="e.g. billy@bob.com">
+            </div>
+            <div class="form-group">
+                <label for="password"><span style="color: #d81700; font-weight: bold">* </span>Password</label>
+                <input id="password" name="password" class="form-control" type="password" value="${sessionScope.password}" placeholder="eightcharacters">
+            </div>
+            <div class="form-group">
+                <label for="confirm_password"><span style="color: #d81700; font-weight: bold">* </span>Confirm Password</label>
                 <input id="confirm_password" name="confirm_password" class="form-control" type="password">
             </div>
             <input type="submit" class="btn btn-primary btn-block">

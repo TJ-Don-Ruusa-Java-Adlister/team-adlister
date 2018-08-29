@@ -2,6 +2,7 @@ package com.codeup.adlister.dao;
 
 import com.codeup.adlister.controllers.Config;
 import com.codeup.adlister.models.User;
+import com.codeup.adlister.util.Password;
 import com.mysql.cj.jdbc.Driver;
 
 import java.sql.*;
@@ -9,6 +10,7 @@ import java.sql.*;
 public class MySQLUsersDao implements Users {
     private Connection connection;
 
+    // Constructor
     public MySQLUsersDao(Config config) {
         try {
             DriverManager.registerDriver(new Driver());
@@ -23,9 +25,10 @@ public class MySQLUsersDao implements Users {
     }
 
 
+    // Retrieves an existing user from the `users` table using the username
     @Override
     public User findByUsername(String username) {
-        String query = "SELECT * FROM users WHERE username = ? LIMIT 1";
+        String query = "SELECT * FROM users WHERE username = ? ";
         try {
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, username);
@@ -35,14 +38,31 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    // Retrieves an existing user from the `users` table using the email
+    @Override
+    public User findByEmail(String email) {
+        String query = "SELECT * FROM users WHERE email = ? ";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, email);
+            return extractUser(stmt.executeQuery());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error finding user by email", e);
+        }
+    }
+
+    // Inserts a new user into the `users` table
     @Override
     public Long insert(User user) {
-        String query = "INSERT INTO users(username, email, password) VALUES (?, ?, ?)";
+        String query = "INSERT INTO users(username, first_name, last_name, email, password, phone_no) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
+            stmt.setString(2, user.getFirstName());
+            stmt.setString(3, user.getLastName());
+            stmt.setString(4, user.getEmail());
+            stmt.setString(5, user.getPassword());
+            stmt.setString(6, user.getPhoneNo());
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
             rs.next();
@@ -52,6 +72,7 @@ public class MySQLUsersDao implements Users {
         }
     }
 
+    // Used by findByUsername & findByEmail methods -- creates new User object with the user that was retrieved from database (ResultSet rs).
     private User extractUser(ResultSet rs) throws SQLException {
         if (! rs.next()) {
             return null;
@@ -60,7 +81,10 @@ public class MySQLUsersDao implements Users {
             rs.getLong("id"),
             rs.getString("username"),
             rs.getString("email"),
-            rs.getString("password")
+            rs.getString("password"),
+            rs.getString("first_name"),
+            rs.getString("last_name"),
+            rs.getString("phone_no")
         );
     }
 

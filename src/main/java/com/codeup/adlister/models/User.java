@@ -1,26 +1,36 @@
 package com.codeup.adlister.models;
 
 import com.codeup.adlister.util.Password;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class User {
     private long id;
     private String username;
     private String email;
     private String password;
+    private String firstName;
+    private String lastName;
+    private String phoneNo;
 
     public User() {}
 
-    public User(String username, String email, String password) {
-        this.username = username;
-        this.email = email;
-        setPassword(password);
-    }
-
-    public User(long id, String username, String email, String password) {
-        this.id = id;
+    public User(String username, String firstName, String lastName, String email, String password, String phoneNo) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNo = phoneNo;
+    }
+
+    public User(long id, String username, String email, String password, String firstName, String lastName, String phoneNo) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        setPassword(password);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.phoneNo = phoneNo;
     }
 
     public long getId() {
@@ -53,5 +63,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = Password.hash(password);
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 }
