@@ -17,4 +17,10 @@ public interface Ads {
     Ad getAdById(String id);
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
+    // get all the ads with a specific userID
+    List<Ad> getAdsByUser(String userId);
+    // delete a specific ad with ad ID
+    Long deleteAd(String id);
+    // edit a specific ad with ad ID
+    Long editAd(Ad ad, String id);
 }

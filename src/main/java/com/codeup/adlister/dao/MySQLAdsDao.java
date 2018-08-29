@@ -129,6 +129,57 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    // method to get ads with specific userID
+    @Override
+    public List<Ad> getAdsByUser(String userId) {
+        List<Ad> adsByUser = new ArrayList<>();
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ads WHERE user_id = ?");
+            stmt.setString(1,userId);
+            ResultSet rs = stmt.executeQuery();
+            return createAdsFromResults(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by a user from the database", e);
+        }
+    }
+
+    // Deletes an ad using ad id
+    @Override
+    public Long deleteAd(String id) {
+        String query = "DELETE FROM ads WHERE id = ?";
+        try{
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+        }
+        catch (SQLException e){
+            throw new RuntimeException("Error deleting ad.", e);
+        }
+    }
+
+    // Updates ad using ad id
+    @Override
+    public Long editAd(Ad ad, String id) {
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title = ? AND description = ? WHERE id = ?");
+            stmt.setString(1, ad.getTitle());
+            stmt.setString(2, ad.getDescription());
+            stmt.setLong(3, ad.getId());
+            stmt.executeUpdate();
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            return rs.getLong(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating Ad information", e);
+        }
+    }
+
+
+    // converts a ResultSet of ads into a single Ad object, if rs contains only 1
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
             rs.getLong("id"),
@@ -139,6 +190,7 @@ public class MySQLAdsDao implements Ads {
         );
     }
 
+    // builds list of ads using ResultSet
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {
         List<Ad> ads = new ArrayList<>();
         while (rs.next()) {
