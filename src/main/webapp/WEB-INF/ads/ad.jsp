@@ -6,16 +6,20 @@
     </jsp:include>
 </head>
 <body>
-    <%--Navbar--%>
-    <jsp:include page="/WEB-INF/partials/navbar.jsp" />
+<%--Navbar--%>
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
-    <h2 class="dispay-2">${ad.title}</h2>
-    <small>Created by ${user.username} on ${ad.datePosted}</small>
+<div class="row"></div>
+<h4 class="display-4">${ad.title}</h4>
+<small class="text-muted">Created by ${user.username} on ${ad.datePosted}</small>
 
-    <p></p>
+<p>${ad.description}</p>
 
+<form action="/ads" method="GET">
+    <button type="submit" class="btn btn-secondary">Back to Ads</button>
+</form>
 
-    <%--Scripts--%>
-    <jsp:include page="/WEB-INF/partials/scripts.jsp" />
+<%--Scripts--%>
+<jsp:include page="/WEB-INF/partials/scripts.jsp" />
 </body>
 </html>
