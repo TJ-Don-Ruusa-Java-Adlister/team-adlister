@@ -7,7 +7,7 @@
     </jsp:include>
 </head>
 <body>
-    <jsp:include page="/WEB-INF/partials/navbar.jsp" />
+    <jsp:include page="/WEB-INF/partials/homepage-navbar.jsp" />
     <div class="parallax">
 
         <div class="banner">
