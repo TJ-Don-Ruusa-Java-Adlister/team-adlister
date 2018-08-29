@@ -1,0 +1,29 @@
+.navbar{
+    z-index: 1000;
+}
+
+.banner{
+    background: whitesmoke;
+    opacity: .6;
+    min-height: 25vh;
+    top: -500px;
+    font-weight: 900;
+    padding: 10vh;
+}
+
+.text{
+    font-weight: 900;
+    color: purple;
+    text-decoration-color: purple;
+}
+
+
+.parallax{
+    background-image: url("../images/jumbotron.png");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 75vh;
+    padding-top: 25vh;
+}
