@@ -18,7 +18,7 @@
 
     <c:forEach var="ad" items="${ads}">
         <div class="col-md-6">
-            <h2><c:out value="${ad.title}" /></h2>
+            <h2><a href="<%= response.encodeURL(request.getContextPath() + "/ads/ad?adId=") %>${ad.id}"><c:out value="${ad.title}" /></a></h2>
             <p><c:out value="${ad.description}" /></p>
         </div>
     </c:forEach>

@@ -16,6 +16,7 @@ public class AdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String adId = request.getParameter("adId");
+        System.out.println(adId);
         Ad ad = DaoFactory.getAdsDao().getAdById(adId);
 
         String userId = Long.toString(ad.getUserId());
@@ -23,7 +24,7 @@ public class AdServlet extends HttpServlet {
 
         request.setAttribute("ad", ad);
         request.setAttribute("user", user);
-        request.getRequestDispatcher("/WEB_INF/ads/ad.jsp").forward(request, response);
+        request.getRequestDispatcher("../WEB-INF/ads/ad.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

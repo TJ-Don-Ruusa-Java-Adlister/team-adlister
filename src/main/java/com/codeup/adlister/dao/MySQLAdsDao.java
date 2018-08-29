@@ -100,11 +100,13 @@ public class MySQLAdsDao implements Ads {
     @Override
     public Ad getAdById(String id) {
         PreparedStatement stmt = null;
-        String query = "SELECT * FROM ads WHERE id = ?";
+        String query = "SELECT * FROM ads as a WHERE a.id = ?";
         try {
             stmt = connection.prepareStatement(query);
             stmt.setString(1, id);
-            return extractAd(stmt.executeQuery());
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractAd(rs);
         } catch (SQLException e) {
             throw new RuntimeException("Ad could not be retrieved with ID", e);
         }
