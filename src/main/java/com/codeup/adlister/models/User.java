@@ -10,6 +10,7 @@ public class User {
     private String firstName;
     private String lastName;
     private String phoneNo;
+    public String tempPassword;
 
     public User() {}
 
@@ -26,7 +27,7 @@ public class User {
         this.id = id;
         this.username = username;
         this.email = email;
-        setPassword(password);
+        this.tempPassword = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNo = phoneNo;
@@ -62,6 +63,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = Password.hash(password);
+    }
+
+    public String getTempPassword() {
+        return tempPassword;
+    }
+
+    public void setTempPassword(String tempPassword) {
+        this.tempPassword = tempPassword;
     }
 
     public String getFirstName() {
