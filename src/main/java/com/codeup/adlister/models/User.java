@@ -18,7 +18,7 @@ public class User {
     public User(String username, String firstName, String lastName, String email, String password, String phoneNo) {
         this.username = username;
         this.email = email;
-        this.password = password;
+        setPassword(password);
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNo = phoneNo;
