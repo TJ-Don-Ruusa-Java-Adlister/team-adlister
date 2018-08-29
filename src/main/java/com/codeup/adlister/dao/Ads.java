@@ -13,6 +13,8 @@ public interface Ads {
     List<Ad> searchByTitle(String searchTerm);
     // get a list of all ads related to category
     List<Ad> searchbyCategory(String category);
+    // get an ad using the ID
+    Ad getAdById(String id);
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
 }

@@ -10,9 +10,9 @@
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
 
     <h2 class="dispay-2">${ad.title}</h2>
-    <small>Created by ${user.username} on ${ad.date}</small>
+    <small>Created by ${user.username} on ${ad.datePosted}</small>
 
-
+    <p></p>
 
 
     <%--Scripts--%>

@@ -54,5 +54,11 @@ public class Ad {
         this.description = description;
     }
 
+    public String getDatePosted() {
+        return datePosted;
+    }
 
+    public void setDatePosted(String datePosted) {
+        this.datePosted = datePosted;
+    }
 }

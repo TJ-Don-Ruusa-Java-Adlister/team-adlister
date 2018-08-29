@@ -28,12 +28,13 @@ public class CreateAdServlet extends HttpServlet {
         User user = (User) request.getSession().getAttribute("user");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.now();
+        String newDate = localDate.toString().substring(5) + "-" + localDate.toString().substring(0, 4);
 
         Ad ad = new Ad(
             user.getId(),
             request.getParameter("title"),
             request.getParameter("description"),
-            localDate.toString()
+            newDate
         );
         DaoFactory.getAdsDao().insert(ad);
         response.sendRedirect("/ads");
