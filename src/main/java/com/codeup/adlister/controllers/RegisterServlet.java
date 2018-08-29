@@ -37,9 +37,9 @@ public class RegisterServlet extends HttpServlet {
                 || phoneNo.isEmpty()
                 || email.isEmpty()
                 || password.isEmpty()
-                || !Validation.isNotExistingUsername(username)
-                || Validation.isValidPhoneNumber(phoneNo)
-                || !Validation.isNotExistingEmail(email)
+                || !Validation.isExistingUsername(username)
+                || !Validation.isValidPhoneNumber(phoneNo)
+                || !Validation.isExistingEmail(email)
                 || !Validation.isValidLength(password)
                 || !Validation.passwordsMatching(password, passwordConfirmation);
 
@@ -57,13 +57,13 @@ public class RegisterServlet extends HttpServlet {
                     || password.isEmpty()) {
                 request.setAttribute("error", "All fields are required.");
         // if a username already exists...
-            } else if (!Validation.isNotExistingUsername(username)) {
+            } else if (!Validation.isExistingUsername(username)) {
                 request.setAttribute("error", "There is already a user with that username. Please login or choose another username.");
         // if the phone number is not valid...
             } else if (!Validation.isValidPhoneNumber(phoneNo)) {
                 request.setAttribute("error", "Phone number must be numbers only & must include area code. Please try again.");
         // if an email already exists...
-            } else if (!Validation.isNotExistingEmail(email)) {
+            } else if (!Validation.isExistingEmail(email)) {
                 request.setAttribute("error", "There is already a user with that email. Please login or use another email.");
         // if a password is too short...
             } else if (Validation.isValidLength(password)) {

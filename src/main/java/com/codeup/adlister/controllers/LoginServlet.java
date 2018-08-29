@@ -28,10 +28,14 @@ public class LoginServlet extends HttpServlet {
         request.getSession().invalidate();
 
         if (user == null) {
-            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
+//            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
+            request.getSession().setAttribute("error", "USER ERROR");
             response.sendRedirect("/login");
             return;
         }
+
+        System.out.println(password);
+        System.out.println(Password.check(password, user.getPassword()));
 
         boolean validAttempt = Password.check(password, user.getPassword());
 
@@ -39,7 +43,8 @@ public class LoginServlet extends HttpServlet {
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
-            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
+//            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
+            request.getSession().setAttribute("error", "PASSWORD ERROR");
             response.sendRedirect("/login");
         }
     }

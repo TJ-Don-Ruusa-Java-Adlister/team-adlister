@@ -52,22 +52,22 @@ public class MySQLUsersDao implements Users {
 
 // Inserts a new user into the `users` table
     @Override
-    public Long insert(User user) {
+    public Long insert(User newUser) {
         String query = "INSERT INTO users(username, first_name, last_name, email, password, phone_no) VALUES (?, ?, ?, ?, ?, ?)";
         try {
             String newPhoneNo;
-            if (user.getPhoneNo().length() == 10) {
-                newPhoneNo = user.getPhoneNo().substring(0, 3) + "-" + user.getPhoneNo().substring(4, 7) + "-" + user.getPhoneNo().substring(8);
+            if (newUser.getPhoneNo().length() == 10) {
+                newPhoneNo = newUser.getPhoneNo().substring(0, 3) + "-" + newUser.getPhoneNo().substring(4, 7) + "-" + newUser.getPhoneNo().substring(8);
             } else {
-                newPhoneNo = user.getPhoneNo().substring(0, 1) + "-" + user.getPhoneNo().substring(2, 5) + "-" + user.getPhoneNo().substring(6, 9) + "-" + user.getPhoneNo().substring(10);
+                newPhoneNo = newUser.getPhoneNo().substring(0, 1) + "-" + newUser.getPhoneNo().substring(2, 5) + "-" + newUser.getPhoneNo().substring(6, 9) + "-" + newUser.getPhoneNo().substring(10);
             }
 
             PreparedStatement stmt = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            stmt.setString(1, user.getUsername());
-            stmt.setString(2, user.getFirstName());
-            stmt.setString(3, user.getLastName());
-            stmt.setString(4, user.getEmail());
-            stmt.setString(5, user.getPassword());
+            stmt.setString(1, newUser.getUsername());
+            stmt.setString(2, newUser.getFirstName());
+            stmt.setString(3, newUser.getLastName());
+            stmt.setString(4, newUser.getEmail());
+            stmt.setString(5, newUser.getPassword());
             stmt.setString(6, newPhoneNo);
             stmt.executeUpdate();
             ResultSet rs = stmt.getGeneratedKeys();
