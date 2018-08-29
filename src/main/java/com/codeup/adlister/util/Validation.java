@@ -5,14 +5,16 @@ import com.codeup.adlister.models.User;
 
 public class Validation {
 
-    public static boolean isNotExistingUsername (String username) {
+    public static boolean isExistingUsername(String username) {
         User user = DaoFactory.getUsersDao().findByUsername(username);
-        return user != null;
+        System.out.println("Username does not exist: " + (user == null));
+        return user == null;
     }
 
-    public static boolean isNotExistingEmail (String email) {
+    public static boolean isExistingEmail(String email) {
         User user = DaoFactory.getUsersDao().findByEmail(email);
-        return user != null;
+        System.out.println("Email does not exist: " + (user == null));
+        return user == null;
     }
 
     public static boolean isValidLength(String password) {
