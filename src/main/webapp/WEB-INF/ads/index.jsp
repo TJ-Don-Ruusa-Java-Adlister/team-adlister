@@ -12,7 +12,7 @@
 
 
 <div class="container">
-    <h1>Here Are all the ads!</h1>
+    <div style="text-align: center"><h1>Here are all the ads!</h1></div>
 
     <c:if test="${requestScope.search != null}">
         <h3>Search term: <c:out value="${search}" /></h3>
