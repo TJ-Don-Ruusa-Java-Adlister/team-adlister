@@ -14,10 +14,16 @@ public class DeleteAdServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Long id = Long.parseLong(request.getParameter("Delete"));
         DaoFactory.getAdsDao().deleteAd(id);
+        request.setAttribute("ads", DaoFactory.getAdsDao().all());
+
         response.sendRedirect("/profile");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        if (request.getSession().getAttribute("user") == null) {
+            response.sendRedirect("/login");
+            return;
+        }
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
     }
 
