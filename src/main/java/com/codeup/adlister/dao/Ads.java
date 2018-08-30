@@ -27,4 +27,5 @@ public interface Ads {
     void setAdCategories(String adId, List<Long> catIds);
     // get a list of categories for a particular ad
     List<String> getAdCategories(String adId);
+    List<Ad> userAds(long id);
 }
