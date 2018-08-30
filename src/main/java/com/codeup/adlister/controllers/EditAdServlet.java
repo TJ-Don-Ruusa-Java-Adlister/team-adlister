@@ -14,35 +14,6 @@ import java.io.IOException;
 
 @WebServlet(name = "controllers.EditAdServlet", urlPatterns = "/ads/edit")
 public class EditAdServlet extends HttpServlet {
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-//checking to see whether user is logged in, before displaying ad creation form
-
-        HttpSession session = request.getSession();
-             if(session.getAttribute("user") != null){
-            session = request.getSession();
-
-                Long userId = Long.parseLong(request.getParameter("user_id"));
-                request.setAttribute("editAd", DaoFactory.getAdsDao().getAdsByUser(userId));
-                request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
-
-            }
-            else {
-            response.sendRedirect("/login");
-            return;
-        }
-
-        request.setAttribute("editAdId", request.getParameter("edit"));
-        Long adId = Long.parseLong(request.getParameter("edit"));
-        request.setAttribute("updateAd", DaoFactory.getAdsDao().getAdById(adId));
-        request.getRequestDispatcher("/WEB-INF/ads/profile.jsp").forward(request, response);
-
-
-    }
-
-
-
-
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
 //When a new ad is created, assign the user id of the logged in user to the ad.

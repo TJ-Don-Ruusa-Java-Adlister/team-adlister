@@ -97,6 +97,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+    // gets an ad using the ad ID
     @Override
     public Ad getAdById(String id) {
         PreparedStatement stmt = null;
@@ -112,6 +114,8 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
+    // Inserts a new Ad into the `ads` table
     @Override
     public Long insert(Ad ad) {
         try {
@@ -129,6 +133,7 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+
     // method to get ads with specific userID
     @Override
     public List<Ad> getAdsByUser(String userId) {
@@ -143,6 +148,7 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error retrieving ads by a user from the database", e);
         }
     }
+
 
     // Deletes an ad using ad id
     @Override
@@ -160,6 +166,7 @@ public class MySQLAdsDao implements Ads {
             throw new RuntimeException("Error deleting ad.", e);
         }
     }
+
 
     // Updates ad using ad id
     @Override
@@ -179,6 +186,45 @@ public class MySQLAdsDao implements Ads {
     }
 
 
+    // assigns categories to a particular ad
+    @Override
+    public void setAdCategories(String adId, List<Long> catIds) {
+        String query = "INSERT INTO ads_topics(ads_id, category_id) VALUES (?, ?)";
+        try {
+            for (Long catId : catIds) {
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setString(1, adId);
+                ps.setLong(2, catId);
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error adding categories to Ad");
+        }
+    }
+
+
+    // get a list of categories for a particular ad
+    @Override
+    public List<String> getAdCategories(String adId) {
+        List<String> adsByUser = new ArrayList<>();
+        String query = "SELECT * FROM category as c " +
+                "JOIN ads_topics as ats ON ats.category_id = c.id " +
+                "JOIN ads as a ON a.id = ats.ads_id " +
+                "WHERE a.id = ?";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1,adId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                adsByUser.add(rs.getString("category"));
+            }
+            return adsByUser;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by a user from the database", e);
+        }
+    }
+
+
     // converts a ResultSet of ads into a single Ad object, if rs contains only 1
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
@@ -189,6 +235,7 @@ public class MySQLAdsDao implements Ads {
             rs.getString("date_posted")
         );
     }
+
 
     // builds list of ads using ResultSet
     private List<Ad> createAdsFromResults(ResultSet rs) throws SQLException {

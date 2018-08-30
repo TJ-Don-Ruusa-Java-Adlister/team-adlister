@@ -23,4 +23,8 @@ public interface Ads {
     Long deleteAd(String id);
     // edit a specific ad with ad ID
     Long editAd(Ad ad, String id);
+    // assigns categories to a particular ad
+    void setAdCategories(String adId, List<Long> catIds);
+    // get a list of categories for a particular ad
+    List<String> getAdCategories(String adId);
 }
