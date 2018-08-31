@@ -8,52 +8,55 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet (name = "controllers.UpdateProfileServlet", urlPatterns = "/profile/update")
+
 public class UpdateProfileServlet extends HttpServlet {
 
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        if (request.getSession().getAttribute("user") == null) {
-            response.sendRedirect("/login");
-            return;
-        }
-        request.getRequestDispatcher("/WEB-INF/update_profile.jsp")
-                .forward(request, response);
+        String id = request.getParameter("id");
+        User user = DaoFactory.getUsersDao().findById(id);
+        request.setAttribute("user", user);
+
+
+        request.getRequestDispatcher("/WEB-INF/update_profile.jsp").forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        String username_update = request.getParameter("username");
-        String email_update = request.getParameter("email");
-        String password_update = request.getParameter("password");
-        String password_update_confirm = request.getParameter("password-confirm");
-        String phone_no_update = request.getParameter("phone_no");
-        boolean errors = username_update.isEmpty()
-                || email_update.isEmpty()
-                || (! password_update.equals(password_update_confirm));
-
-        if (errors) {
-            response.sendRedirect("/profile/update");
-            return;
-        }
-
-        User sessionUser = (User) request.getSession().getAttribute("user");
-        User updateUser = new User(username_update,  email_update, password_update, phone_no_update);
-
-        if(!username_update.equals(sessionUser.getUsername()))
-            DaoFactory.getUsersDao().updateUsername(updateUser.getUsername(), sessionUser.getId());
-
-        if(!email_update.equals(sessionUser.getEmail()))
-            DaoFactory.getUsersDao().updateEmail(updateUser.getEmail(), sessionUser.getId());
-
-        if(!password_update.isEmpty())
-            DaoFactory.getUsersDao().updatePassword(updateUser.getPassword(), sessionUser.getId());
-        if(!phone_no_update.isEmpty())
-            DaoFactory.getUsersDao().updatePhoneNo(updateUser.getPhoneNo(), sessionUser.getId());
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-        request.getSession().setAttribute("user", updateUser);
+        HttpSession session = request.getSession();
+
+
+        User user = new User();
+
+        // create a new User object
+        String id = request.getParameter("id");
+        user = DaoFactory.getUsersDao().findById(id);
+        // Insert User object into `users` table
+
+        user.setUsername(request.getParameter("username"));
+        user.setFirstName (request.getParameter("firstName"));
+        user.setLastName(request.getParameter("lastName"));
+        user.setEmail(request.getParameter("email"));
+        user.setPhoneNo(request.getParameter("phoneNo"));
+        user.setPassword(request.getParameter("password"));
+        user.setTempPassword(request.getParameter("tempPassword"));
+
+        DaoFactory.getUsersDao().updateUser(user);
+        request.getSession().invalidate();
+
+
+        User userNew = DaoFactory.getUsersDao().findByUsername(request.getParameter("username"));
+
+
+        request.getSession().setAttribute("user", userNew);
+
         response.sendRedirect("/profile");
+
+
     }
 }

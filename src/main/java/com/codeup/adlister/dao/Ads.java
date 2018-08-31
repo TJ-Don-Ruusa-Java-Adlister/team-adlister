@@ -17,10 +17,11 @@ public interface Ads {
     Ad getAdById(String id);
     // insert a new ad and return the new ad's id
     Long insert(Ad ad);
-    // get all the ads with a specific userID
-    List<Ad> getAdsByUser(String userId);
-    // delete a specific ad with ad ID
-    Long deleteAd(String id);
+
+    // get all ads that have a specific userID
+    List<Ad> getAdsByUser(Long userId);
+    List<Ad> getAdsByUser(String userId);    // delete a specific ad with ad ID
+
     // edit a specific ad with ad ID
     Long editAd(Ad ad, String id);
     // assigns categories to a particular ad
@@ -28,4 +29,10 @@ public interface Ads {
     // get a list of categories for a particular ad
     List<String> getAdCategories(String adId);
     List<Ad> userAds(long id);
+
+
+    void deleteAd(String id);
+
+    // edit a specific ad from the ads list.
+    void editAd(Ad ad);
 }
