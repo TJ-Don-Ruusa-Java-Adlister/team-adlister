@@ -133,6 +133,11 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<Ad> getAdsByUser(Long userId) {
+        return null;
+    }
+
 
     // method to get ads with specific userID
     @Override
@@ -149,6 +154,10 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public Long editAd(Ad ad, String id) {
+        return null;
+    }
 
 
     @Override
@@ -197,10 +206,7 @@ public class MySQLAdsDao implements Ads {
                 stmt.setLong(1, adId);
                 stmt.setLong(2,Long.parseLong(cats[i]));
                 stmt.executeLargeUpdate();
-//                ResultSet rs = stmt.getGeneratedKeys();
-//                rs.next();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException("Error adding categories to Ad");
         }
@@ -253,7 +259,7 @@ public class MySQLAdsDao implements Ads {
 //Methods affecting edit/delete/update functionality
 
     // method to get ads with specific userID
-    @Override
+    //@Override
     public List<Ad> getAdsByUser(long userId) {
         List<Ad> adsByUser = new ArrayList<>();
 

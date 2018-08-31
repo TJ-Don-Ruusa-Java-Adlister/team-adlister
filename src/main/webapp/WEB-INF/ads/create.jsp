@@ -6,6 +6,7 @@
     </jsp:include>
 </head>
 <body>
+<jsp:include page="/WEB-INF/partials/navbar.jsp" />
 <div class="container">
     <%--////////adding user ID--%>
     <div style="text-align: center; margin-top: 50px">
