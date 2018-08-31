@@ -29,9 +29,11 @@
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
 
-                <%--NEED TO WORK ON LINKS - GET CODE FOR GETADSBYUSER      --%>
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Edit Profile</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/profile/password">Change my Password</a>
                 </li>
 
 
@@ -49,6 +51,7 @@
 
 
                 <input type="hidden" name="id" value="${sessionScope.user.id}"/>
+            <input type="hidden" name="password" value="${sessionScope.user.password}">
 
                 <table align="center">
                     <tr>
@@ -79,20 +82,7 @@
                             <input id="phoneNo" name="phoneNo" class="form-control" type="text" value="${sessionScope.user.phoneNo}">
                         </td>
                     </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td>
-                            <input id="password" name="password" class="form-control" type="password" value="${sessionScope.user.password}" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> Confirm your password </td>
-                        <td>
-                            <input id="confirm_password" name="confirm_password" class="form-control" type="password">
-                        </td>
-                    </tr>
-                    <tr><td></td>
-                    </tr>
+
                     <tr>
                         <td>
                             <input type="submit" class="card-link" value="update"> </input>

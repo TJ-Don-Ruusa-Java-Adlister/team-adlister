@@ -17,4 +17,7 @@ public interface Users {
     void updateUser(User user);
     User getUserById(Long id);
     User getUserById(String id);
+
+    void updatePassword(User user);
+
 }
