@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<%--<jsp:include page="../WEB-INF/partials/navbar.jsp" />--%>
+<jsp:include page="../WEB-INF/partials/navbar.jsp" />
 
 <%
     String id=request.getParameter("id");
@@ -33,12 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Edit Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/myads">VIEW MY ADS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ads">VIEW ALL ADS</a>
-                </li>
+
 
             </ul>
         </div>
