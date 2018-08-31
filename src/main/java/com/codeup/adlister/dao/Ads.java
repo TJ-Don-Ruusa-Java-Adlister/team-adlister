@@ -19,13 +19,10 @@ public interface Ads {
     Long insert(Ad ad);
 
     // get all ads that have a specific userID
-    List<Ad> getAdsByUser(Long userId);
-    List<Ad> getAdsByUser(String userId);    // delete a specific ad with ad ID
+      // delete a specific ad with ad ID
 
-    // edit a specific ad with ad ID
-    Long editAd(Ad ad, String id);
     // assigns categories to a particular ad
-    void setAdCategories(long adId, String[] catIds);
+    void setAdCategories(long adId, String[] cats);
     // get a list of categories for a particular ad
     List<String> getAdCategories(String adId);
     List<Ad> userAds(long id);

@@ -177,4 +177,49 @@ public class MySQLUsersDao implements Users {
         return 0L;
     }
 
+
+    public void updateUser(User user) {
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET  username= ?, email= ?, password= ?, phone_no= ? WHERE id= ?");
+            stmt.setString(1, user.getUsername());
+            stmt.setString(2, user.getEmail());
+            stmt.setString(3, user.getPassword());
+            stmt.setString(4, user.getPhoneNo());
+            stmt.setLong(5, user.getId());
+            stmt.executeUpdate();
+
+        }catch (SQLException e) {
+            throw new RuntimeException("Error updating User information", e);
+        }
+    }
+
+    // gets an ad using the ad ID
+    @Override
+    public User getUserById(String id) {
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM users as a WHERE a.id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setString(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractUser(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("Ad could not be retrieved with ID", e);
+        }
+    }
+    @Override
+    public User getUserById(Long id) {
+        PreparedStatement stmt = null;
+        String query = "SELECT * FROM users as a WHERE a.id = ?";
+        try {
+            stmt = connection.prepareStatement(query);
+            stmt.setLong(1, id);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            return extractUser(rs);
+        } catch (SQLException e) {
+            throw new RuntimeException("User could not be retrieved with ID", e);
+        }
+    }
 }
