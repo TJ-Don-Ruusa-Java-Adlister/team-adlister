@@ -39,7 +39,7 @@ public class CreateAdServlet extends HttpServlet {
         DaoFactory.getAdsDao().insert(ad);
         response.sendRedirect("/profile");
 
-        long id = ad.getId();
+        long id = DaoFactory.getAdsDao().insert(ad);
 
         String cat[] = request.getParameterValues("category");
 
