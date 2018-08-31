@@ -26,17 +26,14 @@ public class CreateAdServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = (User) request.getSession().getAttribute("user");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate localDate = LocalDate.now();
-        String newDate = localDate.toString().substring(5) + "-" + localDate.toString().substring(0, 4);
-
+        System.out.println(user);
+        System.out.println(user.getId());
         Ad ad = new Ad(
             user.getId(),
             request.getParameter("title"),
             request.getParameter("description"),
-            newDate
+                "date"
         );
-        DaoFactory.getAdsDao().insert(ad);
         response.sendRedirect("/profile");
 
         long id = DaoFactory.getAdsDao().insert(ad);
