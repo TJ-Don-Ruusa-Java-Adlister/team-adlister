@@ -16,7 +16,7 @@
 </head>
 <body>
 
-<%--<jsp:include page="../WEB-INF/partials/navbar.jsp" />--%>
+<jsp:include page="../WEB-INF/partials/navbar.jsp" />
 
 <%
     String id=request.getParameter("id");
@@ -24,7 +24,7 @@
 %>
 <div class="container">
 
-
+<div style="height: 50px;"></div>
     <div class="card text-center border-dark" style="width: 80%;">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
@@ -33,12 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="#">Edit Profile</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/myads">VIEW MY ADS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/ads">VIEW ALL ADS</a>
-                </li>
+
 
             </ul>
         </div>
