@@ -11,7 +11,7 @@
             <c:choose>
                 <c:when test="${sessionScope.user != null}">
                     <li class="nav-item"><a class="nav-link" href="/ads/create">Create an Ad</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/profile">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/profile/update">Edit Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="/logout">Logout</a></li>
                 </c:when>
                 <c:otherwise>
