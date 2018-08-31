@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,10 +8,17 @@
 </head>
 <body>
 <div class="container">
+    <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <%--////////adding user ID--%>
     <div style="text-align: center; margin-top: 50px">
-        <h1>New Ad for ${sessionScope.user.firstName}</h1>
+        <h1>Create a New Ad</h1>
     </div>
+
+    <%--Displays an error if any of the forms/form values are invalid--%>
+    <c:if test="${error1 != null}">
+        <div class="alert alert-danger" role="alert">${error1}</div>
+    </c:if>
+
     <form action="/ads/create" method="post">
         <div class="form-group">
             <br>
@@ -54,11 +62,11 @@
                             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             <div class="form-group">
                                 <label for="title">Title</label>
-                                <input id="title" name="title" class="form-control" type="text">
+                                <input id="title" name="title" class="form-control" type="text" value="${oldTitle}">
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
-                                <textarea id="description" name="description" class="form-control" type="text"></textarea>
+                                <textarea id="description" name="description" class="form-control" type="text">${oldDescription}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="date_posted">Date Posted</label>

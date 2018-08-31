@@ -21,25 +21,38 @@ public class CreateAdServlet extends HttpServlet {
             return;
         }
         request.getRequestDispatcher("/WEB-INF/ads/create.jsp")
-            .forward(request, response);
+                .forward(request, response);
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         User user = (User) request.getSession().getAttribute("user");
-        System.out.println(user);
-        System.out.println(user.getId());
-        Ad ad = new Ad(
-            user.getId(),
-            request.getParameter("title"),
-            request.getParameter("description"),
-                "date"
-        );
-        response.sendRedirect("/profile");
+        String title = request.getParameter("title");
+        String description = request.getParameter("description");
+        String categories[] = request.getParameterValues("category");
+        System.out.println(categories);
+        boolean invalidAttempt = title.isEmpty()
+                || categories == null;
 
-        long id = DaoFactory.getAdsDao().insert(ad);
-
-        String cat[] = request.getParameterValues("category");
-
-        DaoFactory.getAdsDao().setAdCategories(id,cat);
+        if (invalidAttempt) {
+            if (title.isEmpty()) {
+                request.setAttribute("error1", "Title is required.");
+            } else if (categories == null) {
+                request.setAttribute("error1", "Must select at least 1 category.");
+            }
+            request.setAttribute("oldTitle", title);
+            request.setAttribute("oldDescription", description);
+            request.getRequestDispatcher("/WEB-INF/ads/create.jsp").forward(request, response);
+        } else {
+            Ad ad = new Ad(
+                    user.getId(),
+                    title,
+                    description,
+                    "date"
+            );
+            long id = DaoFactory.getAdsDao().insert(ad);
+            DaoFactory.getAdsDao().setAdCategories(id, categories);
+            request.setAttribute("postSuccess", "Ad creation successful.");
+            response.sendRedirect("/profile");
+        }
     }
 }
