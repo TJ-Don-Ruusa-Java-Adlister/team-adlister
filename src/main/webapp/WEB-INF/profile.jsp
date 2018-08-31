@@ -46,31 +46,31 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="ad" items="${ads}">
+        <c:forEach var="user_ads" items="${user_ads}">
             <tr>
                 <th scope="row">
                     <h5>
-                        <c:out value="${ad.id}" />
+                        <c:out value="${user_ads.id}" />
                     </h5>
                 </th>
                 <td>
                     <h5>
-                        <a href="<%= response.encodeURL(request.getContextPath() + "/ads/ad?adId=") %>${ad.id}">
-                            <c:out value="${ad.title}" />
+                        <a href="<%= response.encodeURL(request.getContextPath() + "/ads/ad?adId=") %>${user_ads.id}">
+                            <c:out value="${user_ads.title}" />
                         </a>
                     </h5>
                 </td>
                 <td>
                     <h5>
-                        <c:out value="${ad.description}" />
+                        <c:out value="${user_ads.description}" />
                     </h5>
                 </td>
                 <td>
                     <form action="ads/delete" method="get">
-                        <a href="${pageContext.request.contextPath}/ads/delete?id=${ad.id}">Delete</a>
+                        <a href="${pageContext.request.contextPath}/ads/delete?id=${user_ads.id}">Delete</a>
                     </form>
                     <form action="ads/edit" method="get">
-                        <a name="edit" href="${pageContext.request.contextPath}/ads/edit?id=${ad.id}">Edit</a>
+                        <a name="edit" href="${pageContext.request.contextPath}/ads/edit?id=${user_ads.id}">Edit</a>
                     </form>
                 </td>
             </tr>
