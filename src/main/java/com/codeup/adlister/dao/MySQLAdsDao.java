@@ -150,17 +150,15 @@ public class MySQLAdsDao implements Ads {
     }
 
 
-    // Deletes an ad using ad id
+
     @Override
-    public Long deleteAd(String id) {
+    public void deleteAd(String id) {
         String query = "DELETE FROM ads WHERE id = ?";
         try{
             PreparedStatement stmt = connection.prepareStatement(query);
             stmt.setString(1, id);
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            return rs.getLong(1);
+
         }
         catch (SQLException e){
             throw new RuntimeException("Error deleting ad.", e);
@@ -170,16 +168,16 @@ public class MySQLAdsDao implements Ads {
 
     // Updates ad using ad id
     @Override
-    public Long editAd(Ad ad, String id) {
+    public void editAd(Ad ad) {
         try{
-            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title = ? AND description = ? WHERE id = ?");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET  title= ?, description= ? WHERE id= ?");
+//set the parameters in the order of the SQL statement
             stmt.setString(1, ad.getTitle());
             stmt.setString(2, ad.getDescription());
             stmt.setLong(3, ad.getId());
+
             stmt.executeUpdate();
-            ResultSet rs = stmt.getGeneratedKeys();
-            rs.next();
-            return rs.getLong(1);
+
         } catch (SQLException e) {
             throw new RuntimeException("Error updating Ad information", e);
         }
@@ -281,37 +279,37 @@ public class MySQLAdsDao implements Ads {
         return adsByUser;
     }
 
-    // method to delete a specific ad
-    @Override
-    public void deleteAd(Long id) {
-        String query = "DELETE FROM ads where id = ?";
-        try{
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setLong(1, id);
-            stmt.executeUpdate();
-        }
-        catch (SQLException e){
-            throw new RuntimeException("Error deleting ad.", e);
-
-        }
-    }
-
-    @Override
-    public void editAd(Ad ad) {
-        try{
-            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title=? description=? WHERE id=?");
-
-            stmt.setString(3, ad.getTitle());
-            stmt.setString(4, ad.getDescription());
-            stmt.setLong(1, ad.getId());
-            stmt.setLong(2, ad.getUserId());
-
-            stmt.executeUpdate();
-
-        } catch (SQLException e) {
-            throw new RuntimeException("Error updating Ad information", e);
-        }
-    }
+//    // method to delete a specific ad
+//    @Override
+//    public void deleteAd(Long id) {
+//        String query = "DELETE FROM ads where id = ?";
+//        try{
+//            PreparedStatement stmt = connection.prepareStatement(query);
+//            stmt.setLong(1, id);
+//            stmt.executeUpdate();
+//        }
+//        catch (SQLException e){
+//            throw new RuntimeException("Error deleting ad.", e);
+//
+//        }
+//    }
+//
+//    @Override
+//    public void editAd(Ad ad) {
+//        try{
+//            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title=? description=? WHERE id=?");
+//
+//            stmt.setString(3, ad.getTitle());
+//            stmt.setString(4, ad.getDescription());
+//            stmt.setLong(1, ad.getId());
+//            stmt.setLong(2, ad.getUserId());
+//
+//            stmt.executeUpdate();
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException("Error updating Ad information", e);
+//        }
+//    }
 
     @Override
     public List<Ad> userAds(long id) {
