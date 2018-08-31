@@ -24,7 +24,7 @@ public interface Ads {
     // edit a specific ad with ad ID
     Long editAd(Ad ad, String id);
     // assigns categories to a particular ad
-    void setAdCategories(String adId, List<Long> catIds);
+    void setAdCategories(long adId, String[] catIds);
     // get a list of categories for a particular ad
     List<String> getAdCategories(String adId);
     List<Ad> userAds(long id);

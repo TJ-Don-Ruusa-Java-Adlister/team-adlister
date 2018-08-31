@@ -188,15 +188,21 @@ public class MySQLAdsDao implements Ads {
 
     // assigns categories to a particular ad
     @Override
-    public void setAdCategories(String adId, List<Long> catIds) {
-        String query = "INSERT INTO ads_topics(ads_id, category_id) VALUES (?, ?)";
-        try {
-            for (Long catId : catIds) {
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, adId);
-                ps.setLong(2, catId);
-                ps.executeUpdate();
+    public void setAdCategories(long adId, String[] cats) {
+        try{
+            for(int t = 0; t<cats.length; t++){
+                System.out.println(cats[t]);
             }
+            for(int i = 0; i<cats.length; i++){
+                PreparedStatement stmt = null;
+                stmt = connection.prepareStatement("INSERT INTO ads_topics(ads_id, category_id) VALUES (?, ?)");
+                stmt.setLong(1, adId);
+                stmt.setLong(2,Long.parseLong(cats[i]));
+                stmt.executeLargeUpdate();
+//                ResultSet rs = stmt.getGeneratedKeys();
+//                rs.next();
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException("Error adding categories to Ad");
         }
