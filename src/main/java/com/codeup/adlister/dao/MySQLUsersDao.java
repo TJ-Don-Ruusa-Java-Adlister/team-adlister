@@ -20,7 +20,7 @@ public class MySQLUsersDao implements Users {
                 config.getPassword()
             );
         } catch (SQLException e) {
-            throw new RuntimeException("Error connecting to the database!", e);
+            throw new RuntimeException("t t Error connecting to the database!", e);
         }
     }
 
@@ -178,21 +178,33 @@ public class MySQLUsersDao implements Users {
     }
 
 
-    public void updateUser(User user) {
+    public void updateUser(User user){
         try{
-            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET  username= ?, email= ?, password= ?, phone_no= ? WHERE id= ?");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET username=?, email=?, phone_no=? WHERE id=?");
             stmt.setString(1, user.getUsername());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getPassword());
-            stmt.setString(4, user.getPhoneNo());
-            stmt.setLong(5, user.getId());
+            stmt.setString(3, user.getPhoneNo());
+            stmt.setLong(4, user.getId());
             stmt.executeUpdate();
 
-        }catch (SQLException e) {
-            throw new RuntimeException("Error updating User information", e);
+        }catch(SQLException e){
+            throw new RuntimeException("Error updating User Profile.");
         }
     }
 
+
+    public void updatePassword(User user){
+        try{
+            PreparedStatement stmt = connection.prepareStatement("UPDATE users SET password=?  WHERE id=?");
+            stmt.setString(1, user.getPassword());
+            stmt.setLong(2, user.getId());
+
+            stmt.executeUpdate();
+
+        }catch(SQLException e){
+            throw new RuntimeException("Error updaing User Password.");
+        }
+    }
     // gets an ad using the ad ID
     @Override
     public User getUserById(String id) {
