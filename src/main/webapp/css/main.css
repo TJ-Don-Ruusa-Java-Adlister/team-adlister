@@ -1,48 +1,61 @@
-/*@import url("https://fonts.googleapis.com/css?family=Cinzel+Decorative:900|Monda|Source+Sans+Pro");*/
-
 html, body {
-    font-family: 'Source Sans Pro', Helvetica, sans-serif;
+    font-family: 'Montserrat', Helvetica, sans-serif;
 }
 
-nav {
-    font-family: 'Source Sans Pro', Helvetica, sans-serif;
-    z-index: 1000;
+footer .container {
+    background: #2b2b2b;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Monda', Helvetica, sans-serif;
+.checkbox-danger input[type="checkbox"]:checked + label::before {
+    background-color: #ED0034;
+    border-color: #ED0034; }
+.checkbox-danger input[type="checkbox"]:checked + label::after {
+    color: #fff; }
+
+.dropdown-menu .dropdown-item:not(:disabled):not(.disabled):active,
+.dropdown-menu .dropdown-item:not(:disabled):not(.disabled):focus {
+    color: transparent;
+}
+
+.title-link {
+    color: #ED0034 !important;
+    text-decoration: none;
 }
 
 .navbar .navbar-brand {
     font-family: 'Cinzel Decorative', Helvetica, sans-serif;
-    color: #9f1600;
-    text-shadow: .5px .5px #551600;
+    color: #ED0034;
+    text-shadow: 1px 1px #2f1100;
 }
 
 .banner {
-    background: whitesmoke;
+    background: #292929;
     opacity: .8;
     min-height: 25vh;
-    top: -500px;
     font-weight: 900;
-    padding: 10vh;
+    padding: 65px;
+    border: none;
+    margin-top: 5em;
 }
 
 .text {
-    font-weight: 900;
-    color: purple;
-    text-decoration-color: purple;
+    font-weight: 300;
+    color: white;
 }
 
-
 .parallax {
-    background-image: url("../images/jumbotron.png");
+    background-image: url("../images/blank-close-up-crumpled-479453.jpg");
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 75vh;
-    padding-top: 25vh;
+    min-height: 85vh;
+}
+
+.logo-text {
+    font-family: 'Cinzel Decorative', Helvetica, sans-serif;
+    color: #ED0034;
+    text-shadow: .75px .75px #2f1100;
 }
 
 #register {

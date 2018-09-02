@@ -54,7 +54,7 @@ public class UpdateProfileServlet extends HttpServlet {
 
 
         request.getSession().setAttribute("user", userNew);
-
+        request.getSession().setAttribute("profileEdited", "Profile successfully updated.");
         response.sendRedirect("/profile");
 
 

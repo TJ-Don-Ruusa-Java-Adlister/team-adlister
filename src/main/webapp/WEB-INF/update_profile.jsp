@@ -24,8 +24,18 @@
 %>
 <div class="container">
 
-<div style="height: 50px;"></div>
-    <div class="card text-center border-dark" style="width: 80%;">
+    <div class="row mt-4 py-2">
+        <div class="col-1 mr-3">
+            <i class="fas fa-user-edit fa-4x" style="color: #696969;"></i>
+        </div>
+        <div class="col">
+            <h1>Update your Profile</h1>
+        </div>
+    </div>
+    <hr>
+
+<div class="row"></div>
+    <div class="card text-center border-dark mx-auto" style="width: 60%;">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
 
@@ -33,7 +43,7 @@
                     <a class="nav-link active" href="#">Edit Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile/password">Change my Password</a>
+                    <a class="title-link nav-link" href="/profile/password">Change my Password</a>
                 </li>
 
 
@@ -41,43 +51,37 @@
         </div>
         <div class="card-body">
             <h5 class="card-title">
-                Welcome, ${sessionScope.user.firstName} !
                 <br>
-                <br>
-                Edit Form
+                Profile Info Form
             </h5>
             <p class="card-text">
             <form action="/profile/update" method="post">
 
-
                 <input type="hidden" name="id" value="${sessionScope.user.id}"/>
-            <input type="hidden" name="password" value="${sessionScope.user.password}">
+                <input type="hidden" name="password" value="${sessionScope.user.password}">
+                <input type="hidden" name="firstName" value="${sessionScope.user.firstName}"/>
+                <input type="hidden" name="lastName" value="${sessionScope.user.lastName}"/>
 
-                <table align="center">
+                <table align="center" class="w-80">
                     <tr>
-                        <td>Full Name</td>
-                        <td>
-                            <input type="hidden" name="firstName" value="${sessionScope.user.firstName}"/>
-                            <input type="hidden" name="lastName" value="${sessionScope.user.lastName}"/>
-
-                            <h1>${sessionScope.user.firstName} ${sessionScope.user.lastName}</h1>
-                        </td>
+                        <td>Full Name: </td>
+                        <td>  ${sessionScope.user.firstName} ${sessionScope.user.lastName}</td>
                     </tr>
                     <tr>
-                        <td>Username</td>
+                        <td>Username: </td>
                         <td>
                             <input id="username" name="username" class="form-control" type="text" value="${sessionScope.user.username}">
                         </td>
                     </tr>
 
                     <tr>
-                        <td>Email</td>
+                        <td>Email: </td>
                         <td>
                             <input id="email" name="email" class="form-control" type="text" value="${sessionScope.user.email}">
                         </td>
                     </tr>
                     <tr>
-                        <td>Phone</td>
+                        <td>Phone Number: </td>
                         <td>
                             <input id="phoneNo" name="phoneNo" class="form-control" type="text" value="${sessionScope.user.phoneNo}">
                         </td>
@@ -85,25 +89,18 @@
 
                     <tr>
                         <td>
-                            <input type="submit" class="card-link" value="update"> </input>
                         </td>
                         <td>
-                            <input type="submit" class="card-link" value="reset"> </input>
                         </td>
 
                     </tr>
                 </table>
+                <input type="submit" class="card-link btn btn-danger btn-sm" value="Submit"> </input>
+                <a href="/profile" class="card-link btn btn-secondary btn-sm">Cancel</a>
             </form>
         </div>
     </div>
-
-
-
-
-
-
-
-
 </div>
+<jsp:include page="/WEB-INF/partials/scripts.jsp" />
 </body>
 </html>

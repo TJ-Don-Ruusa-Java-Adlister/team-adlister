@@ -31,7 +31,7 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> all() {
         PreparedStatement stmt = null;
         try {
-            stmt = connection.prepareStatement("SELECT * FROM ads");
+            stmt = connection.prepareStatement("SELECT * FROM ads ORDER BY date_posted DESC");
             ResultSet rs = stmt.executeQuery();
             return createAdsFromResults(rs);
         } catch (SQLException e) {
@@ -155,14 +155,13 @@ public class MySQLAdsDao implements Ads {
 
     // Updates ad using ad id
     @Override
-    public void editAd(Ad ad) {
+    public void editAd(Ad ad, String id) {
         try{
-            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET  title= ?, description= ? WHERE id= ?");
+            PreparedStatement stmt = connection.prepareStatement("UPDATE ads SET title = ?, description = ? WHERE id = ?");
 //set the parameters in the order of the SQL statement
             stmt.setString(1, ad.getTitle());
             stmt.setString(2, ad.getDescription());
-            stmt.setLong(3, ad.getId());
-
+            stmt.setString(3, id);
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -237,11 +236,7 @@ public class MySQLAdsDao implements Ads {
         return ads;
     }
 
-//Methods affecting edit/delete/update functionality
-
-
-
-
+    // Methods affecting edit/delete/update functionality
     @Override
     public List<Ad> userAds(long id) {
         PreparedStatement stmt = null;
@@ -255,4 +250,20 @@ public class MySQLAdsDao implements Ads {
         }
     }
 
+    @Override
+    public List<String> getCategoryById(String id) {
+        List<String> category = new ArrayList<>();
+        String query = "SELECT * FROM category as c WHERE c.id = ? LIMIT 1";
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+            stmt.setString(1,id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                category.add(rs.getString("category"));
+            }
+            return category;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving ads by a user from the database", e);
+        }
+    }
 }

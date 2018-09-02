@@ -14,21 +14,28 @@ import java.io.IOException;
 
 @WebServlet(name = "controllers.EditAdServlet", urlPatterns = "/ads/edit")
 public class EditAdServlet extends HttpServlet {
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String id = request.getParameter("id");
+        Ad ad = DaoFactory.getAdsDao().getAdById(id);
+        request.setAttribute("ad", ad);
+        request.getRequestDispatcher("/WEB-INF/ads/edit.jsp").forward(request, response);
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            String id = request.getParameter("id");
 //When a new ad is created, assign the user id of the logged in user to the ad.
             User user = (User)(request.getSession().getAttribute("user"));
-
 //Create ne Ad object that is connected to user.
             Ad ad = new Ad(
                     user.getId(),
                     request.getParameter("title"),
                     request.getParameter("description"),
                     request.getParameter("date_posted")
-
             );
 
-        DaoFactory.getAdsDao().insert(ad);
-        response.sendRedirect("/ads");
+        DaoFactory.getAdsDao().editAd(ad, id);
+        request.getSession().setAttribute("edited", "Ad successfully edited.");
+        response.sendRedirect("/profile");
     }
 }
