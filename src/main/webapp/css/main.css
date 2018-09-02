@@ -49,13 +49,44 @@ footer .container {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    min-height: 85vh;
+    min-height: 65vh;
 }
 
 .logo-text {
     font-family: 'Cinzel Decorative', Helvetica, sans-serif;
     color: #ED0034;
     text-shadow: .75px .75px #2f1100;
+}
+
+.carousel-item h5,
+.carousel-item blockquote {
+    text-align: center;
+    color: white;
+}
+
+.carousel-item h5 {
+    line-height: 60px;
+    padding-top: 1em;
+}
+
+.carousel-item blockquote {
+    font-size: 16px;
+    line-height: 50px;
+    padding-bottom: 3em;
+}
+
+.dev-profiles .card {
+    border: none;
+}
+
+.dev-desc {
+    padding: 2em;
+    height: 200px;
+}
+
+.card-footer {
+    background: transparent;
+    border: none;
 }
 
 #register {
