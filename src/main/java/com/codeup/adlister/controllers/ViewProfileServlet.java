@@ -6,7 +6,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+
 import com.codeup.adlister.dao.DaoFactory;
+import com.codeup.adlister.models.Ad;
 import com.codeup.adlister.models.User;
 
 
@@ -20,12 +23,13 @@ public class ViewProfileServlet extends HttpServlet {
 
         User user = (User)request.getSession().getAttribute("user");
         long id = user.getId();
-        System.out.println(id);
-        request.setAttribute("user_ads", DaoFactory.getAdsDao().userAds(id));
-
-
+        List<Ad> usersAds = DaoFactory.getAdsDao().userAds(id);
+        System.out.println(usersAds.size());
+        request.setAttribute("noOfAds", usersAds.size());
+        request.setAttribute("user_ads", usersAds);
         request.getRequestDispatcher("/WEB-INF/profile.jsp").forward(request, response);
-
-
+        request.getSession().removeAttribute("profileEdited");
+        request.getSession().removeAttribute("edited");
+        request.getSession().removeAttribute("deleted");
     }
 }

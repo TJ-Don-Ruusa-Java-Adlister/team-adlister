@@ -25,6 +25,7 @@ public class AdServlet extends HttpServlet {
         request.setAttribute("ad", ad);
         request.setAttribute("user", user);
         request.getRequestDispatcher("../WEB-INF/ads/ad.jsp").forward(request, response);
+        request.getSession().removeAttribute("created");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
