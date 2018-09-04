@@ -15,7 +15,7 @@ public class DeleteAdServlet extends HttpServlet {
         String id = request.getParameter("id");
         DaoFactory.getAdsDao().deleteAd(id);
         request.setAttribute("ads", DaoFactory.getAdsDao().all());
-
+        request.getSession().setAttribute("deleted", "Ad successfully deleted.");
         response.sendRedirect("/profile");
     }
 

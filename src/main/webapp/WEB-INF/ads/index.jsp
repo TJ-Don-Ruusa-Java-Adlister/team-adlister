@@ -12,33 +12,49 @@
 
 
 <div class="container">
-    <div style="text-align: center"><h1>Here are all the ads!</h1></div>
+    <div class="row mt-4">
+        <div class="col-1">
+            <i class="far fa-list-alt fa-4x" style="color: #696969;"></i>
+        </div>
+        <div class="col">
+            <c:choose>
+                <c:when test="${search != null && category != null}">
+                    <h1 class="pt-2">Ads matching "<c:out value="${search}" />" in <c:out value="${category}" /></h1>
+                </c:when>
+                <c:when test="${search != null}">
+                    <h1 class="pt-2">Ads matching "<c:out value="${search}" />"</h1>
+                </c:when>
+                <c:when test="${category != null}">
+                    <h1 class="pt-2">Ads in <c:out value="${category}" /></h1>
+                </c:when>
+                <c:otherwise>
+                    <h1 class="pt-2">All Ads</h1>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
+    <hr class="my-3">
 
-    <c:if test="${requestScope.search != null}">
-        <h3>Search term: <c:out value="${search}" /></h3>
-    </c:if>
     <%--added dynamic table to for-each loop--%>
-    <table class="table-striped table-bordered table-hover table" style="width: 80%; margin: 0 auto;">
-        <thead class="thead-dark ">
+    <table class="table-striped table-borderless table">
+        <thead style="background-color: #696969; color: white;">
         <tr>
-            <h3>
-                <th scope="col">Ad id</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-            </h3>
+            <th class="w-25">Date Posted</th>
+            <th class="w-25">Title</th>
+            <th class="w-50">Description</th>
         </tr>
         </thead>
         <tbody>
         <c:forEach var="ad" items="${ads}">
             <tr>
-                <th scope="row">
-                    <h5>
-                        <c:out value="${ad.id}" />
-                    </h5>
-                </th>
                 <td>
                     <h5>
-                        <a href="<%= response.encodeURL(request.getContextPath() + "/ads/ad?adId=") %>${ad.id}">
+                        <c:out value="${ad.datePosted}" />
+                    </h5>
+                </td>
+                <td>
+                    <h5>
+                        <a class="title-link" href="<%= response.encodeURL(request.getContextPath() + "/ads/ad?adId=") %>${ad.id}">
                             <c:out value="${ad.title}" />
                         </a>
                     </h5>
@@ -52,6 +68,10 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <c:if test="${noOfResults == 0}">
+        <small>No ads matching your search...</small>
+    </c:if>
 </div>
 
 <jsp:include page="/WEB-INF/partials/scripts.jsp" />
