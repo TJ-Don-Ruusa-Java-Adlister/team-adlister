@@ -20,21 +20,21 @@
     <div class="container pt-1 my-5">
         <div class="card-group">
             <div class="card text-center">
-                <i class=" my-3 far fa-list-alt fa-7x card-img-top" style="color: #696969;"></i>
+                <i class="mt-3 far fa-list-alt fa-7x card-img-top" style="color: #696969;"></i>
                 <div class="card-body">
                     <a href="/ads" class="btn btn-danger btn-lg mx-auto mb-3">Go to Ads</a>
                     <p class="card-text">Click the button to enter our ad catelog!</p>
                 </div>
             </div>
             <div class="card text-center">
-                <i class=" my-3 fas fa-user-plus fa-7x card-img-top" style="color: #696969;"></i>
+                <i class="mt-3 fas fa-user-plus fa-7x card-img-top" style="color: #696969;"></i>
                 <div class="card-body">
                     <a href="/register" class="btn btn-danger btn-lg mx-auto mb-3">Register</a>
                     <p class="card-text">Have a useless item you need out of your garage? Want to post an ad for it? Register for a FREE account by clicking the button!</p>
                 </div>
             </div>
             <div class="card text-center">
-                <i class=" my-3 far fa-keyboard fa-7x card-img-top" style="color: #696969;"></i>
+                <i class="mt-3 far fa-keyboard fa-7x card-img-top" style="color: #696969;"></i>
                 <div class="card-body">
                     <a href="/login" class="btn btn-danger btn-lg mx-auto mb-3">Login</a>
                     <p class="card-text">Already have an account? Click the button to login!</p>
@@ -104,17 +104,13 @@
                 <hr>
             </div>
         </div>
-        <div class="card-group mt-3 mb-5 dev-profiles">
+        <div class="card-group mt-3 mb-2 dev-profiles">
             <div class="card text-center">
                 <div class="card-img-top">
                     <img src="images/DonPho.jpg" class="rounded-circle" alt="">
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">Don Pho</h4>
-                    <p class="dev-desc">My experience in the fast food industry has prepared me to quickly adapt to many situation and become a supportive team-player with my quick-thinking and responsiveness. As I got exposed to more software languages, I was able to understand the fundamentals of the language and at the same time, make time to read a book without compromising the task at hand.</p>
-                    <br>
-                </div>
-                <div class="card-footer">
                     <a href="https://www.linkedin.com/in/donpho/" class="btn btn-outline-danger mx-auto">Contact</a>
                 </div>
             </div>
@@ -124,10 +120,6 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">Ruusa Bolton</h4>
-                    <p class="dev-desc">In my travels I have come across a common theme - the need for information and how that information is shared. It is inherent in us as people to want to know - I want to be part of spreading the message through the artistry of web development. I am excited to see where this leg of the journey takes me.</p>
-                    <br>
-                </div>
-                <div class="card-footer">
                     <a href="https://www.linkedin.com/in/ruusapbolton/" class="btn btn-outline-danger mx-auto">Contact</a>
                 </div>
             </div>
@@ -137,10 +129,6 @@
                 </div>
                 <div class="card-body">
                     <h4 class="card-title">TJ English</h4>
-                    <p class="dev-desc">I am a purpose-driven developer with an ever-expanding fascination for creating something from nothing. As a former microbiologist, I have grown in my ability to thrive in a team environment, and I have cultivated effective analytical & problem-solving skills. My desire is to contribute to a team that addresses a real problem by providing a real solution.</p>
-                    <br>
-                </div>
-                <div class="card-footer">
                     <a href="https://www.linkedin.com/in/tenglishjr/" class="btn btn-outline-danger mx-auto">Contact</a>
                 </div>
             </div>

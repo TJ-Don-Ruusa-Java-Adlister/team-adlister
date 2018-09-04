@@ -43,29 +43,12 @@ CREATE TABLE ads_topics(
   FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE CASCADE
 );
 
-INSERT INTO category (category)
-VALUES
-  ('Other'),
-  ('Antiques'),
-  ('Appliances'),
-  ('Arts and Craft'),
-  ('Automobile'),
-  ('Beauty'),
-  ('Children'),
-  ('Computers'),
-  ('Electronics'),
-  ('Furniture'),
-  ('Garden'),
-  ('Toys and Games'),
-  ('Video Games'),
-  ('Pets and Animals');
-
-SELECT * FROM users;
-SELECT * FROM ads GROUP BY id;
-SELECT * FROM category;
-SELECT * FROM ads_topics;
-
-DESCRIBE users;
-DESCRIBE ads;
-DESCRIBE category;
-DESCRIBE ads_topics;
+-- SELECT * FROM users;
+-- SELECT * FROM ads;
+-- SELECT * FROM category;
+-- SELECT * FROM ads_topics;
+--
+-- DESCRIBE users;
+-- DESCRIBE ads;
+-- DESCRIBE category;
+-- DESCRIBE ads_topics;
