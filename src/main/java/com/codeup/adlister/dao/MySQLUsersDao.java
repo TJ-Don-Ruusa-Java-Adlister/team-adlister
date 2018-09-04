@@ -205,7 +205,7 @@ public class MySQLUsersDao implements Users {
             throw new RuntimeException("Error updaing User Password.");
         }
     }
-    // gets an ad using the ad ID
+    // gets a user using the ad ID
     @Override
     public User getUserById(String id) {
         PreparedStatement stmt = null;

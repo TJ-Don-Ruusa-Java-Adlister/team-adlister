@@ -16,7 +16,6 @@ public class AdServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String adId = request.getParameter("adId");
-        System.out.println(adId);
         Ad ad = DaoFactory.getAdsDao().getAdById(adId);
 
         String userId = Long.toString(ad.getUserId());

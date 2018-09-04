@@ -13,11 +13,9 @@ public interface Users {
     Long updateEmail(String email, Long id);
     Long updatePassword(String password, Long id);
     Long updatePhoneNo(String phone_no, Long id);
-
     void updateUser(User user);
     User getUserById(Long id);
     User getUserById(String id);
-
     void updatePassword(User user);
 
 }
