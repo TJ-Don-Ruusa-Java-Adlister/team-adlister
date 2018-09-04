@@ -19,35 +19,32 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("/profile");
             return;
         }
+        request.setAttribute("loggedOut", request.getSession().getAttribute("loggedOut"));
         request.getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
+        request.getSession().removeAttribute("loggedOut");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         User user = DaoFactory.getUsersDao().findByUsername(username);
-        String hash = user.getTempPassword();
         request.getSession().invalidate();
-        System.out.println(user);
+
         if (user == null) {
-//            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
-            request.getSession().setAttribute("error", "USER ERROR");
+            request.getSession().setAttribute("error", "That username does not exist. Please try again.");
             response.sendRedirect("/login");
             return;
         }
 
-        System.out.println(password);
-        System.out.println(user.getTempPassword());
-        System.out.println(Password.check(password, hash));
-
+        String hash = user.getTempPassword();
         boolean validAttempt = Password.check(password, hash);
 
         if (validAttempt) {
             request.getSession().setAttribute("user", user);
             response.sendRedirect("/profile");
         } else {
-//            request.getSession().setAttribute("error", "Invalid username or password. Please try again.");
-            request.getSession().setAttribute("error", "PASSWORD ERROR");
+            request.getSession().setAttribute("error", "Invalid password. Please try again.");
+            request.getSession().setAttribute("tempUsername", user.getUsername());
             response.sendRedirect("/login");
         }
     }

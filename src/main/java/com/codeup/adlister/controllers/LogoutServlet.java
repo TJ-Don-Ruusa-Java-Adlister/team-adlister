@@ -9,8 +9,8 @@ import java.io.IOException;
 @WebServlet(name = "controllers.LogoutServlet", urlPatterns = "/logout")
 public class LogoutServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        request.getSession().removeAttribute("user");
         request.getSession().invalidate();
+        request.getSession().setAttribute("loggedOut", "You have been successfully logged out.");
         response.sendRedirect("/login");
     }
 }

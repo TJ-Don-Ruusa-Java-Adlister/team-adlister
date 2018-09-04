@@ -9,8 +9,12 @@
 <body>
     <jsp:include page="/WEB-INF/partials/navbar.jsp" />
     <div class="container">
+        <c:if test="${sessionScope.loggedOut != null}">
+            <div class="my-3 alert alert-info" role="alert">${sessionScope.loggedOut}</div>
+            <hr>
+        </c:if>
         <c:if test="${sessionScope.registered != null}">
-            <div class="my-3 alert alert-info" role="alert">${sessionScope.registered}</div>
+            <div class="my-3 alert alert-success" role="alert">${sessionScope.registered}</div>
             <hr>
         </c:if>
         <c:if test="${sessionScope.error != null}">
@@ -26,7 +30,7 @@
                 <form action="/login" method="POST">
                     <div class="form-group">
                         <label for="username">Username</label>
-                        <input id="username" name="username" class="form-control" type="text">
+                        <input id="username" name="username" class="form-control" type="text" value="${sessionScope.tempUsername}">
                     </div>
                     <div class="form-group">
                         <label for="password">Password</label>
