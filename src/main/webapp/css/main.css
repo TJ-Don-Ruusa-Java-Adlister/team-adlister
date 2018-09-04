@@ -79,16 +79,6 @@ footer .container {
     border: none;
 }
 
-.dev-desc {
-    padding: 2em;
-    height: 225px;
-}
-
-.card-footer {
-    background: transparent;
-    border: none;
-}
-
 #register {
     height: 500px;
     border: solid cornflowerblue 3px;

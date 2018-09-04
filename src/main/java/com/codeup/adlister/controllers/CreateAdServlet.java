@@ -29,7 +29,6 @@ public class CreateAdServlet extends HttpServlet {
         String title = request.getParameter("title");
         String description = request.getParameter("description");
         String categories[] = request.getParameterValues("category");
-        System.out.println(categories);
         boolean invalidAttempt = title.isEmpty()
                 || categories == null;
 

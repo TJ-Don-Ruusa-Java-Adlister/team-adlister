@@ -25,30 +25,32 @@ public class AdsIndexServlet extends HttpServlet {
         List<String> catName = DaoFactory.getAdsDao().getCategoryById(category);
         List<Ad> results;
 
+        // if only searching with search term...
         if (category.equals("all") && !search.equals("")) {
             results = DaoFactory.getAdsDao().searchByTitle(search);
             request.setAttribute("search", search);
             request.setAttribute("ads", results);
             request.setAttribute("noOfResults", results.size());
-        } else if (category.equals("all") && search.equals("")) {
-            results = DaoFactory.getAdsDao().all();
-            request.setAttribute("ads", results);
-            request.setAttribute("noOfResults", results.size());
+            // if only searching with category...
         } else if (!category.equals("all") && search.equals("")) {
             results = DaoFactory.getAdsDao().searchbyCategory(category);
             request.setAttribute("category", catName.get(0));
             request.setAttribute("ads", results);
             request.setAttribute("noOfResults", results.size());
-        } else {
+            // if searching with both category and search term...
+        } else if (!category.equals("all") && !search.equals("")) {
             results = DaoFactory.getAdsDao().search(category, search);
             request.setAttribute("search", search);
             request.setAttribute("category", catName.get(0));
             request.setAttribute("ads", results);
             request.setAttribute("noOfResults", results.size());
+            // if user clicks 'Search' without using search term or specifying category...
+        } else {
+            results = DaoFactory.getAdsDao().all();
+            request.setAttribute("ads", results);
+            request.setAttribute("noOfResults", results.size());
         }
 
-        System.out.println(search);
-        System.out.println(category);
         request.getRequestDispatcher("/WEB-INF/ads/index.jsp").forward(request, response);
 
     }

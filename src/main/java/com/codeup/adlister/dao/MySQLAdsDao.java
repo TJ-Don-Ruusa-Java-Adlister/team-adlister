@@ -18,9 +18,9 @@ public class MySQLAdsDao implements Ads {
         try {
             DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(
-                config.getUrl(),
-                config.getUser(),
-                config.getPassword()
+                    config.getUrl(),
+                    config.getUser(),
+                    config.getPassword()
             );
         } catch (SQLException e) {
             throw new RuntimeException("Error connecting to the database!", e);
@@ -45,12 +45,11 @@ public class MySQLAdsDao implements Ads {
         PreparedStatement stmt = null;
         String formattedSearch = "%" + searchTerm.toLowerCase() + "%";
         String formattedCat = "%" + category + "%";
-        System.out.println("search() method used");
         try {
             stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
                     "JOIN ads_topics as ats on ats.ads_id = a.id " +
                     "JOIN category as c on c.id = ats.category_id " +
-                    "WHERE c.id = ? AND (LOWER(a.title) LIKE ? OR LOWER(a.description) LIKE ?))");
+                    "WHERE c.id = ? AND a.title LIKE ? OR a.description LIKE ?)");
             stmt.setString(1, formattedCat);
             stmt.setString(2, formattedSearch);
             stmt.setString(3, formattedSearch);
@@ -66,7 +65,6 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> searchByTitle(String searchTerm) {
         PreparedStatement stmt = null;
         String formattedSearch = "%" + searchTerm.toLowerCase() + "%";
-        System.out.println("searchByTitle() used");
         try {
             stmt = connection.prepareStatement("SELECT * FROM ads WHERE LOWER(title) LIKE ? OR LOWER(description) LIKE ?");
             stmt.setString(1, formattedSearch);
@@ -83,7 +81,6 @@ public class MySQLAdsDao implements Ads {
     public List<Ad> searchbyCategory(String category) {
         PreparedStatement stmt = null;
         String formattedCat = "%" + category + "%";
-        System.out.println("searchByCategory() used");
         try {
             stmt = connection.prepareStatement("(SELECT * FROM ads as a " +
                     "JOIN ads_topics as ats on ats.ads_id = a.id " +
@@ -174,9 +171,6 @@ public class MySQLAdsDao implements Ads {
     @Override
     public void setAdCategories(long adId, String[] cats) {
         try{
-            for(int t = 0; t<cats.length; t++){
-                System.out.println(cats[t]);
-            }
             for(int i = 0; i<cats.length; i++){
                 PreparedStatement stmt = null;
                 stmt = connection.prepareStatement("INSERT INTO ads_topics(ads_id, category_id) VALUES (?, ?)");
@@ -218,11 +212,11 @@ public class MySQLAdsDao implements Ads {
     // converts a ResultSet of ads into a single Ad object, if rs contains only 1
     private Ad extractAd(ResultSet rs) throws SQLException {
         return new Ad(
-            rs.getLong("id"),
-            rs.getLong("user_id"),
-            rs.getString("title"),
-            rs.getString("description"),
-            rs.getString("date_posted")
+                rs.getLong("id"),
+                rs.getLong("user_id"),
+                rs.getString("title"),
+                rs.getString("description"),
+                rs.getString("date_posted")
         );
     }
 
@@ -267,3 +261,4 @@ public class MySQLAdsDao implements Ads {
         }
     }
 }
+
